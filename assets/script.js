@@ -1,4 +1,4 @@
-// script.js (TAM VE GÜNCEL HALİ)
+// script.js (TÜM MODALLAR İÇİN EKSİKSİZ VE DÜZELTİLMİŞ NİHAİ SÜRÜM)
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -22,21 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const proposalModal = document.getElementById('proposalModal');
     const reportModal = document.getElementById('reportModal');
 
-    // Genel modal açma butonları (ID ile)
-    const setupOpenModalButton = (buttonId, modal) => {
-        const button = document.getElementById(buttonId);
-        if (button) {
-            button.addEventListener('click', () => openModal(modal));
-        }
-    };
+    // Sunum Gönder (ID ile)
+    const openProposalBtn = document.getElementById('openProposalModalBtn');
+    if(openProposalBtn) {
+        openProposalBtn.addEventListener('click', () => openModal(proposalModal));
+    }
     
-    setupOpenModalButton('openLoginModalBtn', loginModal);
-    setupOpenModalButton('openProposalModalBtn', proposalModal);
+    // === DÜZELTİLMİŞ BÖLÜM BAŞLANGICI ===
+    // Class'a göre modal açma (Giriş Yap, Kayıt Ol vb.)
+    document.querySelectorAll('.open-login-modal').forEach(btn => {
+        btn.addEventListener('click', () => openModal(loginModal));
+    });
 
-    // Diğer modal açma butonları (Birden fazla olabilir)
     document.querySelectorAll('.open-register-modal').forEach(btn => {
         btn.addEventListener('click', () => openModal(registerModal));
     });
+    // === DÜZELTİLMİŞ BÖLÜM SONU ===
     
     // Modallar arası geçiş linkleri
     const switchToRegisterLink = document.getElementById('switchToRegister');
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // ======================================================
-    // BÖLÜM 2: DOSYA YÜKLEYİCİ VE SUNUM FORMU (project-detail.php için)
+    // BÖLÜM 2: DOSYA YÜKLEYİCİ VE SUNUM FORMU
     // ======================================================
     const proposalForm = document.getElementById('proposal-form');
     if (proposalForm) {
@@ -83,42 +84,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const submitBtn = document.getElementById('submit-proposal-btn');
         const submitHelperText = document.getElementById('submit-helper-text');
 
-        // Gerekli tüm HTML elementlerinin varlığını kontrol et
         if (dropZone && fileInput && submitBtn && submitHelperText) {
-            
             const triggerFileInput = () => fileInput.click();
             const preventDefaults = (e) => { e.preventDefault(); e.stopPropagation(); };
             const highlight = () => dropZone.classList.add('dragover');
             const unhighlight = () => dropZone.classList.remove('dragover');
-
             const handleFileUpload = (file) => {
                 if (!file) return;
-
-                // Dosya tipi kontrolü
                 const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
                 if (!allowedTypes.includes(file.type)) {
                     alert('Geçersiz dosya türü. Lütfen sadece JPG, PNG veya GIF yükleyin.');
                     return;
                 }
-
                 filePreview.innerHTML = '';
                 submitBtn.disabled = true;
                 submitHelperText.style.display = 'block';
                 submitHelperText.textContent = 'Lütfen önce bir dosya yükleyin.';
-
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    filePreview.innerHTML = `<img src="${e.target.result}" alt="Dosya Önizlemesi">`;
-                };
+                reader.onload = (e) => { filePreview.innerHTML = `<img src="${e.target.result}" alt="Dosya Önizlemesi">`; };
                 reader.readAsDataURL(file);
-
                 const formData = new FormData();
                 formData.append('design_file', file);
-                
-                // AJAX ile dosyayı yükle
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'actions/ajax_upload_handler.php', true);
-
                 xhr.upload.onprogress = (e) => {
                     if (e.lengthComputable) {
                         const percent = (e.loaded / e.total) * 100;
@@ -126,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         if(progressBar) progressBar.style.width = percent + '%';
                     }
                 };
-                
                 xhr.onload = () => {
                     if (xhr.status === 200) {
                         try {
@@ -147,10 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 xhr.send(formData);
             };
-
             const handleDrop = (e) => handleFileUpload(e.dataTransfer.files[0]);
             const handleFileSelect = () => handleFileUpload(fileInput.files[0]);
-
             dropZone.addEventListener('click', triggerFileInput);
             fileInput.addEventListener('change', handleFileSelect);
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, preventDefaults));
@@ -158,13 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ['dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, unhighlight));
             dropZone.addEventListener('drop', handleDrop);
         }
-
         proposalForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-proposal-btn');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Gönderiliyor...';
-
             const formData = new FormData(this);
             fetch('actions/ajax_submit_proposal.php', { method: 'POST', body: formData })
             .then(response => response.json())
@@ -217,32 +200,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-});
 
-// Sayfa dışına tıklandığında çalışan olaylar (DOMContentLoaded dışında kalabilir)
-window.addEventListener('click', (event) => {
-    // Profil menüsünü kapat
-    const profileDropdownContent = document.getElementById('profileDropdownContent');
-    const profileDropdownBtn = document.getElementById('profileDropdownBtn');
-    if (profileDropdownContent && profileDropdownBtn && profileDropdownContent.classList.contains('show')) {
-        if (!profileDropdownContent.contains(event.target) && !profileDropdownBtn.contains(event.target)) {
-            profileDropdownContent.classList.remove('show');
-        }
-    }
-});
-// === PROJE OLUŞTURMA SAYFASI YARDIMCISI ===
-document.addEventListener('DOMContentLoaded', () => {
+    // --- Proje Oluşturma Sayfası Yardımcısı ---
     const categorySelect = document.getElementById('category_id');
     const categoryDescriptionBox = document.getElementById('category-description');
-
-    // Eğer bu elementler sayfada varsa çalıştır
     if (categorySelect && categoryDescriptionBox) {
-        // 'categoriesData' değişkeninin PHP tarafından oluşturulduğundan emin ol
         if (typeof categoriesData !== 'undefined') {
             categorySelect.addEventListener('change', function() {
                 const selectedId = this.value;
                 const descriptionSpan = categoryDescriptionBox.querySelector('span');
-
                 if (selectedId && categoriesData[selectedId]) {
                     descriptionSpan.textContent = categoriesData[selectedId].description || 'Bu kategori için açıklama bulunmuyor.';
                 } else {
@@ -251,60 +217,39 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-});
-// ===============================================
-// === ANA SAYFA ULTRA GÜNCELLEME SCRIPTLERİ ===
-// ===============================================
 
-document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. ANİMASYONLU SAYAÇ
+    // --- Ana Sayfa Animasyonlu Sayaç ---
     const counters = document.querySelectorAll('.stat-value, .stat-value-prize');
-    const speed = 200; // Animasyon hızı
-
-    const animateCounter = (counter) => {
-        const target = +counter.getAttribute('data-target');
-        const isPrize = counter.classList.contains('stat-value-prize');
-        
-        const updateCount = () => {
-            const count = +counter.innerText.replace(/[^0-9]/g, '');
-            const increment = target / speed;
-
-            if (count < target) {
-                const newCount = Math.ceil(count + increment);
-                if (isPrize) {
-                    // Para formatı için
-                    counter.innerText = '₺' + newCount.toLocaleString('tr-TR');
+    if (counters.length > 0) {
+        const speed = 200;
+        const animateCounter = (counter) => {
+            const target = +counter.getAttribute('data-target');
+            const isPrize = counter.classList.contains('stat-value-prize');
+            const updateCount = () => {
+                const count = +counter.innerText.replace(/[^0-9]/g, '');
+                const increment = target / speed;
+                if (count < target) {
+                    const newCount = Math.ceil(count + increment);
+                    counter.innerText = isPrize ? '₺' + newCount.toLocaleString('tr-TR') : newCount;
+                    setTimeout(updateCount, 15);
                 } else {
-                    counter.innerText = newCount;
+                    counter.innerText = isPrize ? '₺' + target.toLocaleString('tr-TR') : target;
                 }
-                setTimeout(updateCount, 15);
-            } else {
-                if (isPrize) {
-                    counter.innerText = '₺' + target.toLocaleString('tr-TR');
-                } else {
-                    counter.innerText = target;
-                }
-            }
+            };
+            updateCount();
         };
-        updateCount();
-    };
-    
-    // Sayaçları sadece ekranda göründüklerinde başlat
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(counter => { observer.observe(counter); });
+    }
 
-    counters.forEach(counter => {
-        observer.observe(counter);
-    });
-
-    // 2. CANLI AKTİVİTE AKIŞI (SİMÜLASYON)
+    // --- Ana Sayfa Canlı Akış Simülasyonu ---
     const liveFeedList = document.getElementById('live-feed-list');
     if (liveFeedList) {
         const activities = [
@@ -314,28 +259,31 @@ document.addEventListener('DOMContentLoaded', () => {
             { icon: 'fa-user-plus', text: '<strong>Yeni bir tasarımcı</strong> aramıza katıldı.' },
             { icon: 'fa-comments', text: '<strong>Bir projeye</strong> yeni yorum yapıldı.' },
         ];
-        
         let activityIndex = 0;
-        
         const addActivity = () => {
             if (liveFeedList.children.length >= 4) {
                 liveFeedList.removeChild(liveFeedList.lastChild);
             }
-
             const activity = activities[activityIndex];
             const li = document.createElement('li');
             li.innerHTML = `<i class="fas ${activity.icon}"></i> ${activity.text}`;
             liveFeedList.prepend(li);
-
-            // Yeni eklenen elemanın görünür olmasını sağla
-            setTimeout(() => {
-                li.classList.add('visible');
-            }, 100);
-
+            setTimeout(() => { li.classList.add('visible'); }, 100);
             activityIndex = (activityIndex + 1) % activities.length;
         };
+        setInterval(addActivity, 4000);
+        addActivity();
+    }
+});
 
-        setInterval(addActivity, 4000); // Her 4 saniyede bir yeni aktivite ekle
-        addActivity(); // İlk aktiviteyi hemen ekle
+// Sayfa dışına tıklandığında çalışan olaylar
+window.addEventListener('click', (event) => {
+    // Profil menüsünü kapat
+    const profileDropdownContent = document.getElementById('profileDropdownContent');
+    const profileDropdownBtn = document.getElementById('profileDropdownBtn');
+    if (profileDropdownContent && profileDropdownBtn && profileDropdownContent.classList.contains('show')) {
+        if (!profileDropdownContent.contains(event.target) && !profileDropdownBtn.contains(event.target)) {
+            profileDropdownContent.classList.remove('show');
+        }
     }
 });
