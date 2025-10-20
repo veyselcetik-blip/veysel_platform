@@ -21,10 +21,16 @@ if (!empty($category_filter)) {
     $where_clauses[] = "p.category = :category";
     $params[':category'] = $category_filter;
 }
-if (!empty($status_filter)) {
+
+// --- DÜZELTME BURADA ---
+// 'tamamlandı' filtresi seçildiğinde, hem 'tamamlandı' hem de 'kazanan_seçildi' durumlarını dahil et
+if ($status_filter === 'tamamlandi') {
+    $where_clauses[] = "p.status IN ('tamamlandı', 'kazanan_seçildi')";
+} elseif (!empty($status_filter)) {
     $where_clauses[] = "p.status = :status";
     $params[':status'] = $status_filter;
 }
+// --- DÜZELTME SONU ---
 
 if (!empty($where_clauses)) {
     $sql .= " WHERE " . implode(" AND ", $where_clauses);
@@ -36,8 +42,6 @@ switch ($sort_order) {
         $sql .= " ORDER BY p.deadline ASC";
         break;
     case 'prize_desc':
-        // Not: Bütçe metin olduğu için bu sıralama alfabetik olacaktır.
-        // Doğru sayısal sıralama için veritabanı yapısının değişmesi gerekir.
         $sql .= " ORDER BY p.budget DESC";
         break;
     default: // 'newest'
@@ -90,7 +94,7 @@ include 'includes/header.php';
             <label>Durum</label>
             <select name="status" onchange="this.form.submit()">
                 <option value="aktif" <?= ($status_filter == 'aktif') ? 'selected' : '' ?>>Aktif</option>
-                <option value="tamamlandı" <?= ($status_filter == 'tamamlandı') ? 'selected' : '' ?>>Tamamlanmış</option>
+                <option value="tamamlandi" <?= ($status_filter == 'tamamlandi') ? 'selected' : '' ?>>Tamamlanmış</option>
             </select>
         </div>
         <div class="form-group">
@@ -111,7 +115,6 @@ include 'includes/header.php';
                     <div class="rpc-main">
                         <div class="rpc-tags">
                             <?php
-                                // Dinamik Etiket: Bitiyor!
                                 if ($project['deadline'] && $project['status'] == 'aktif') {
                                     $deadline = new DateTime($project['deadline']);
                                     $now = new DateTime();

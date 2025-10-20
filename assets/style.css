@@ -1988,3 +1988,1136 @@ body {
 .profile-dropdown-content.show {
     display: block;
 }
+/* === KAZANAN SUNUM KARTI - MODERN VURGULAMA STİLİ === */
+.submission-card-v2.is-winner {
+    /* Kartı diğerlerinden ayırmak için hafifçe büyütelim ve öne çıkaralım */
+    transform: scale(1.03);
+    box-shadow: 0 10px 40px rgba(255, 193, 7, 0.4);
+    border: 2px solid #FFC107; /* Altın rengi çerçeve */
+    position: relative;
+    z-index: 10;
+    overflow: hidden; /* Kurdelenin taşan kısımlarını gizlemek için */
+}
+
+/* "KAZANAN" Kurdelesi */
+.submission-card-v2.is-winner::before {
+    content: 'KAZANAN';
+    position: absolute;
+    top: 25px; /* Kurdelenin dikey konumu */
+    right: -35px; /* Kurdelenin yatay konumu */
+    transform: rotate(45deg); /* Kurdeleyi 45 derece döndür */
+    background: linear-gradient(45deg, #FFC107, #FFD700);
+    color: #4f2c0c; /* Koyu kahverengi tonu */
+    padding: 8px 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 11;
+    letter-spacing: 1px;
+}
+
+/* Hafif bir parlama ve dikkat çekme animasyonu */
+@keyframes winner-glow {
+    0% { box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3); }
+    50% { box-shadow: 0 10px 45px rgba(255, 193, 7, 0.6); }
+    100% { box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3); }
+}
+
+.submission-card-v2.is-winner {
+    animation: winner-glow 3s infinite ease-in-out;
+}
+/* === MODERN YARIŞMA ÖZETİ STİLLERİ === */
+
+#tab-summary {
+    background-color: var(--light-gray);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin: -2rem; /* Üstteki tab-content boşluğunu sıfırlar */
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Sol taraf daha geniş */
+    gap: 2rem;
+}
+
+.summary-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #e0e0e0;
+    margin-bottom: 2rem;
+}
+
+.summary-card h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.summary-card h3 i {
+    margin-right: 0.8rem;
+    color: var(--accent-color);
+}
+
+.summary-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+}
+
+.summary-meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.summary-meta-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-meta-list li:last-child {
+    margin-bottom: 0;
+}
+
+.summary-meta-list i {
+    font-size: 1.5rem;
+    color: #999;
+    width: 30px;
+    text-align: center;
+}
+
+.summary-meta-list span {
+    display: block;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.summary-meta-list strong {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.attachment-card {
+    background: linear-gradient(135deg, #e0f7fa, #b2ebf2); /* Hafif mavi-yeşil gradient */
+    border-color: #4dd0e1;
+    text-align: center;
+}
+
+.attachment-card p {
+    margin-bottom: 1.5rem;
+}
+
+/* Mobil Cihazlar için Düzenleme */
+@media (max-width: 992px) {
+    .summary-grid {
+        grid-template-columns: 1fr; /* Tek sütuna düşür */
+    }
+    #tab-summary {
+        padding: 1.5rem;
+        margin: -1.5rem;
+    }
+}
+/* === YENİ PROJE OLUŞTURMA FORMU STİLLERİ === */
+.form-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.form-header p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.form-step {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+}
+
+.form-step > .form-group > label,
+.form-step > label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.brief-helper {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+}
+
+.brief-helper .form-group {
+    margin-bottom: 2rem;
+}
+
+.brief-helper .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.brief-helper .form-group label {
+    font-weight: 500;
+    color: #333;
+    font-size: 1rem;
+}
+
+.category-description-box {
+    background-color: #e7f3fe;
+    border-left: 4px solid #3498db;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+    color: #2c3e50;
+}
+
+.form-submit-group {
+    text-align: center;
+    margin-top: 2rem;
+}
+/* ====================================================== */
+/* === ANA SAYFA ULTRA GÜNCELLEME STİLLERİ (v2.0) === */
+/* ====================================================== */
+
+/* 1. YENİ HERO ALANI STİLLERİ */
+.hero-reloaded {
+    position: relative;
+    color: white;
+    text-align: center;
+    padding: 8rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1522124448539-0b0c15984649?q=80&w=1934') no-repeat center center/cover;
+    z-index: 1;
+}
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 62, 80, 0.8); /* --primary-color'un yarı saydam hali */
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+.hero-reloaded h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    margin-bottom: 1rem;
+}
+.hero-reloaded p {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto 2.5rem auto;
+    opacity: 0.9;
+}
+.hero-search-form {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    max-width: 600px;
+    margin: 0 auto;
+}
+.hero-search-form form {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.hero-search-form i {
+    color: #999;
+    padding: 0 1rem;
+    font-size: 1.1rem;
+}
+.hero-search-form input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+.hero-search-form .btn {
+    border-radius: 0 4px 4px 0;
+    padding: 1rem 1.5rem;
+}
+
+/* 10. İSTATİSTİKSEL BAŞARI PANELİ */
+.stats-counter-section {
+    background-color: var(--light-gray);
+    padding: 3rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.stats-counter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+.stat-item i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+.stat-item .stat-value, .stat-item .stat-value-prize {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.stat-item .stat-label {
+    font-size: 1rem;
+    color: #777;
+}
+
+/* 2. "NASIL ÇALIŞIR?" ZAMAN TÜNELİ */
+.how-it-works-timeline {
+    padding: 5rem 0;
+    background: #fff;
+}
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+.timeline::after { /* Dikey çizgi */
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #e0e0e0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+}
+.timeline-item {
+    padding: 1rem 40px;
+    position: relative;
+    width: 50%;
+}
+.timeline-item:nth-child(odd) {
+    left: 0;
+    padding-right: 80px;
+    text-align: right;
+}
+.timeline-item:nth-child(even) {
+    left: 50%;
+    padding-left: 80px;
+    text-align: left;
+}
+.timeline-icon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    border: 5px solid #fff;
+    box-shadow: 0 0 0 4px var(--accent-color);
+}
+.timeline-item:nth-child(odd) .timeline-icon {
+    right: 25px;
+}
+.timeline-item:nth-child(even) .timeline-icon {
+    left: 25px;
+}
+.timeline-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* 3. ÖNE ÇIKAN YARIŞMALAR */
+.featured-projects-section {
+    background: var(--light-gray);
+    padding: 5rem 0;
+}
+.project-carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 21%;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 1.5rem;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.project-carousel::-webkit-scrollbar { display: none; }
+.project-card-mini {
+    display: block;
+    text-decoration: none;
+    background: #fff;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+.project-card-mini:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+.project-card-mini .card-image {
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+}
+.project-card-mini .card-content {
+    padding: 1rem;
+}
+.project-card-mini .card-category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #777;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.project-card-mini h4 {
+    color: var(--primary-color);
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+.project-card-mini .card-prize {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+/* 4. ŞAMPİYONLAR LİGİ */
+.hall-of-fame-section {
+    padding: 5rem 0;
+    background: #fff;
+}
+.hall-of-fame-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+.winner-card {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: block;
+    aspect-ratio: 4 / 3;
+}
+.winner-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.winner-card:hover img {
+    transform: scale(1.1);
+}
+.winner-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+    color: white;
+}
+.winner-overlay h4 {
+    margin: 0 0 0.25rem 0;
+}
+.winner-overlay span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* 5. POPÜLER KATEGORİLER & 7. VİDEO */
+.split-section {
+    background: var(--light-gray);
+    padding: 5rem 0;
+}
+.split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+.split-left h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+.popular-categories-list a {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.25rem 1rem;
+    background: #fff;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    border-left: 5px solid transparent;
+}
+.popular-categories-list a:hover {
+    transform: translateX(10px);
+    border-left-color: var(--accent-color);
+}
+.popular-categories-list .cat-name {
+    font-weight: 600;
+}
+.popular-categories-list .cat-count {
+    color: #777;
+}
+.video-promo-card {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    color: white;
+    padding: 3rem;
+    background: url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1770') no-repeat center center/cover;
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.video-promo-card::before {
+    content:'';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.8), rgba(26, 188, 156, 0.7));
+}
+.video-promo-card .play-button, .video-promo-card h3, .video-promo-card p {
+    position: relative;
+    z-index: 2;
+}
+.video-promo-card .play-button {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+.video-promo-card .play-button:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+}
+.video-promo-card h3 {
+    margin-bottom: 1rem;
+}
+
+/* 6. TASARIMCI RADARI */
+.designer-spotlight-section {
+    padding: 5rem 0;
+    background: #fff;
+}
+.spotlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+.designer-card {
+    text-align: center;
+    background: var(--light-gray);
+    padding: 2rem 1rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+.designer-card:hover {
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transform: translateY(-10px);
+}
+.designer-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.designer-card h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.2rem;
+}
+.designer-card span {
+    color: #777;
+    font-size: 0.9rem;
+}
+.designer-stats {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* 8. NEDEN BİZ? & 9. CANLI AKIŞ */
+.final-features-section {
+    background: var(--light-gray);
+    padding: 5rem 0;
+}
+.final-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+}
+.why-us-panel h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+.feature-item {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+.feature-item i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.feature-item h4 {
+    margin-bottom: 0.25rem;
+}
+.live-feed-panel {
+    background: #fff;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+}
+.live-feed-panel h3 {
+    margin: 0 0 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 1rem;
+}
+#live-feed-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 250px;
+    overflow-y: hidden;
+    position: relative;
+}
+#live-feed-list li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+#live-feed-list li.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+#live-feed-list i {
+    margin-right: 0.5rem;
+    color: #999;
+}
+#live-feed-list strong {
+    font-weight: 600;
+}
+
+/* RESPONSIVE DÜZENLEMELER */
+@media (max-width: 992px) {
+    .timeline::after { left: 30px; }
+    .timeline-item { width: 100%; padding-left: 80px; padding-right: 25px; text-align: left !important; }
+    .timeline-item:nth-child(odd) { left: 0; }
+    .timeline-item:nth-child(even) { left: 0; }
+    .timeline-icon { left: 0 !important; }
+    
+    .split-grid, .final-grid { grid-template-columns: 1fr; }
+    .project-carousel { grid-auto-columns: 45%; }
+}
+@media (max-width: 768px) {
+    .hero-reloaded h1 { font-size: 2.5rem; }
+    .stats-counter-grid { grid-template-columns: 1fr; }
+    .project-carousel { grid-auto-columns: 80%; }
+}
+/* === MODERN MESAJLAŞMA SİSTEMİ STİLLERİ === */
+.messaging-container {
+    display: grid;
+    grid-template-columns: 320px 1fr; /* Sol panel sabit, sağ panel esnek */
+    height: 75vh; /* Sayfanın %75'ini kaplasın */
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+/* Sol Panel: Konuşma Listesi */
+.conversation-list {
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+.conversation-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+.conversation-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+.conversation-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+}
+.conversation-item:hover {
+    background: var(--light-gray);
+}
+.conversation-item.active {
+    background: #e7f3fe;
+    border-right: 3px solid var(--accent-color);
+}
+.conversation-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.convo-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+.convo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+.convo-header small {
+    font-size: 0.8rem;
+    color: #999;
+}
+.convo-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.unread-badge {
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Sağ Panel: Mesaj Görüntüleme */
+.message-view {
+    display: flex;
+    flex-direction: column;
+}
+.message-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.message-header h3 {
+    margin: 0;
+}
+.view-profile-btn {
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+.message-list {
+    flex-grow: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    background-color: #f4f6f9;
+}
+.message-bubble {
+    margin-bottom: 1rem;
+    max-width: 70%;
+}
+.message-bubble p {
+    margin: 0;
+    padding: 0.8rem 1rem;
+    border-radius: 18px;
+    line-height: 1.5;
+}
+.message-bubble .message-time {
+    font-size: 0.75rem;
+    color: #999;
+    margin: 0.25rem 0.5rem 0 0.5rem;
+}
+
+.message-bubble.received {
+    align-self: flex-start;
+}
+.message-bubble.received p {
+    background: #e9ecef;
+    color: var(--text-color);
+    border-top-left-radius: 4px;
+}
+
+.message-bubble.sent {
+    margin-left: auto; /* Sağa yasla */
+    text-align: right;
+}
+.message-bubble.sent p {
+    background: var(--accent-color);
+    color: white;
+    border-top-right-radius: 4px;
+}
+
+.message-reply-form {
+    border-top: 1px solid #e0e0e0;
+    padding: 1rem;
+}
+.message-reply-form form {
+    display: flex;
+    gap: 1rem;
+}
+.message-reply-form textarea {
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 0.8rem;
+    resize: none;
+    height: 50px;
+}
+.message-reply-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+.message-reply-form .btn {
+    flex-shrink: 0;
+}
+.no-conversation-selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #aaa;
+}
+.no-conversation-selected i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+/* === PROFİL MENÜSÜ İÇİ MESAJ SAYACI STİLİ === */
+.dropdown-content a {
+    position: relative; /* Sayacı konumlandırmak için gereklidir. */
+}
+
+.notification-badge-menu {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--secondary-color); /* Bildirim zilinden farklı olarak mavi renk */
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    line-height: 1.2;
+}
+/* === MİNİMALİST DEĞERLENDİRME FORMU STİLLERİ === */
+.review-form-container {
+    background: #f9f9f9; /* Sade, açık gri bir arka plan */
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+.review-form-container h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+.review-form-container p {
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+.review-form-container.success {
+    background: #f0f8ff; /* Açık mavi tonu */
+    border-color: var(--accent-color);
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+.review-form-container.success i {
+    margin-right: 0.5rem;
+    color: var(--accent-color);
+}
+
+/* Yıldızlı Puanlama Sistemi (Daha Zarif Hali) */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.star-rating input {
+  display: none;
+}
+.star-rating label {
+  position: relative;
+  padding: 5px; /* Yıldızlar arası boşluğu azalttık */
+  color: #ddd;
+  cursor: pointer;
+  font-size: 2rem; /* Yıldızları biraz küçülttük */
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+  color: #ffc107;
+  transform: scale(1.1); /* Hover efektini belirginleştirdik */
+}
+/* === PROFİL SAYFASI - DEĞERLENDİRME STİLLERİ === */
+
+/* Dinamik Yıldız Puanı Gösterimi */
+.profile-rating-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    background: rgba(0,0,0,0.4);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    width: fit-content;
+}
+.profile-rating-summary strong {
+    font-size: 1.2rem;
+    color: #FFC107;
+}
+.profile-rating-summary span {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    color: #fff;
+}
+
+.stars {
+  --percent: calc(var(--rating) / 5 * 100%);
+  display: inline-block;
+  font-size: 1.5rem;
+  font-family: Times; /* Yıldız karakterinin düzgün görünmesi için */
+  line-height: 1;
+}
+.stars::before {
+  content: '★★★★★';
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #FFC107 var(--percent), #d3d3d3 var(--percent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Değerlendirme Listesi */
+#tab-reviews {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.review-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+.review-item .review-rating .stars {
+    font-size: 1.2rem;
+}
+.review-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #333;
+    margin: 1rem 0;
+    padding: 0;
+    border: none;
+}
+.review-meta {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 1rem;
+    text-align: right;
+}
+.review-meta a {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+/* === ANKET OLUŞTURMA VE OYLAMA STİLLERİ === */
+
+/* Anket Oluşturma Sayfası */
+.poll-submission-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+.poll-submission-item {
+    position: relative;
+    cursor: pointer;
+}
+.poll-submission-item input[type="checkbox"] {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 25px;
+    height: 25px;
+    z-index: 10;
+}
+.poll-submission-item .submission-card-v2 {
+    transition: all 0.2s ease-in-out;
+}
+.poll-submission-item input:checked + .submission-card-v2 {
+    transform: scale(1.05);
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 8px 25px rgba(26, 188, 156, 0.4);
+}
+
+/* Anket Oylama Sayfası */
+.poll-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.poll-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.poll-message {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-top: 1.5rem;
+}
+.poll-message.success { background-color: #d4edda; color: #155724; }
+
+.poll-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+.poll-item label {
+    display: block;
+    cursor: pointer;
+}
+.poll-vote-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-top: 1px solid #eee;
+    transition: background 0.2s ease;
+}
+.poll-item label:hover .poll-vote-action {
+    background: #e7f3fe;
+}
+.poll-item input[type="radio"]:checked ~ .poll-vote-action {
+    background: var(--accent-color);
+    color: white;
+    font-weight: 700;
+}
+.poll-result-bar {
+    background: #e9ecef;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    position: relative;
+    height: 30px;
+    overflow: hidden;
+}
+.poll-result-bar .bar-fill {
+    background: var(--secondary-color);
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+.poll-result-bar .bar-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.poll-submit-area {
+    grid-column: 1 / -1; /* Tüm ızgarayı kapla */
+    text-align: center;
+    margin-top: 2rem;
+}
+.poll-share-box {
+    margin-top: 3rem;
+    text-align: center;
+    background: var(--light-gray);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+}
+.poll-share-box input {
+    width: 100%;
+    max-width: 500px;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 1rem;
+}

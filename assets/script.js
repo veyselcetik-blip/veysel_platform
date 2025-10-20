@@ -230,3 +230,112 @@ window.addEventListener('click', (event) => {
         }
     }
 });
+// === PROJE OLUŞTURMA SAYFASI YARDIMCISI ===
+document.addEventListener('DOMContentLoaded', () => {
+    const categorySelect = document.getElementById('category_id');
+    const categoryDescriptionBox = document.getElementById('category-description');
+
+    // Eğer bu elementler sayfada varsa çalıştır
+    if (categorySelect && categoryDescriptionBox) {
+        // 'categoriesData' değişkeninin PHP tarafından oluşturulduğundan emin ol
+        if (typeof categoriesData !== 'undefined') {
+            categorySelect.addEventListener('change', function() {
+                const selectedId = this.value;
+                const descriptionSpan = categoryDescriptionBox.querySelector('span');
+
+                if (selectedId && categoriesData[selectedId]) {
+                    descriptionSpan.textContent = categoriesData[selectedId].description || 'Bu kategori için açıklama bulunmuyor.';
+                } else {
+                    descriptionSpan.textContent = 'Lütfen bir kategori seçerek başlayın.';
+                }
+            });
+        }
+    }
+});
+// ===============================================
+// === ANA SAYFA ULTRA GÜNCELLEME SCRIPTLERİ ===
+// ===============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. ANİMASYONLU SAYAÇ
+    const counters = document.querySelectorAll('.stat-value, .stat-value-prize');
+    const speed = 200; // Animasyon hızı
+
+    const animateCounter = (counter) => {
+        const target = +counter.getAttribute('data-target');
+        const isPrize = counter.classList.contains('stat-value-prize');
+        
+        const updateCount = () => {
+            const count = +counter.innerText.replace(/[^0-9]/g, '');
+            const increment = target / speed;
+
+            if (count < target) {
+                const newCount = Math.ceil(count + increment);
+                if (isPrize) {
+                    // Para formatı için
+                    counter.innerText = '₺' + newCount.toLocaleString('tr-TR');
+                } else {
+                    counter.innerText = newCount;
+                }
+                setTimeout(updateCount, 15);
+            } else {
+                if (isPrize) {
+                    counter.innerText = '₺' + target.toLocaleString('tr-TR');
+                } else {
+                    counter.innerText = target;
+                }
+            }
+        };
+        updateCount();
+    };
+    
+    // Sayaçları sadece ekranda göründüklerinde başlat
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+
+    // 2. CANLI AKTİVİTE AKIŞI (SİMÜLASYON)
+    const liveFeedList = document.getElementById('live-feed-list');
+    if (liveFeedList) {
+        const activities = [
+            { icon: 'fa-palette', text: '<strong>Yeni bir sunum</strong> eklendi: "Modern Kafe Logosu"' },
+            { icon: 'fa-lightbulb', text: '<strong>Yeni bir proje</strong> başlatıldı: "E-Ticaret Sitesi Arayüzü"' },
+            { icon: 'fa-crown', text: '<strong>Bir proje kazananını</strong> seçti: "Mobil Oyun Karakteri"' },
+            { icon: 'fa-user-plus', text: '<strong>Yeni bir tasarımcı</strong> aramıza katıldı.' },
+            { icon: 'fa-comments', text: '<strong>Bir projeye</strong> yeni yorum yapıldı.' },
+        ];
+        
+        let activityIndex = 0;
+        
+        const addActivity = () => {
+            if (liveFeedList.children.length >= 4) {
+                liveFeedList.removeChild(liveFeedList.lastChild);
+            }
+
+            const activity = activities[activityIndex];
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="fas ${activity.icon}"></i> ${activity.text}`;
+            liveFeedList.prepend(li);
+
+            // Yeni eklenen elemanın görünür olmasını sağla
+            setTimeout(() => {
+                li.classList.add('visible');
+            }, 100);
+
+            activityIndex = (activityIndex + 1) % activities.length;
+        };
+
+        setInterval(addActivity, 4000); // Her 4 saniyede bir yeni aktivite ekle
+        addActivity(); // İlk aktiviteyi hemen ekle
+    }
+});
