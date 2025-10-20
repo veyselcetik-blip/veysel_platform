@@ -984,107 +984,6 @@ body {
     align-self: flex-end;
 }
 
-/* Zengin Proje Kartı */
-.rich-project-card {
-    background: var(--white-color);
-    border: 1px solid #e0e0e0;
-    border-radius: var(--border-radius);
-    margin-bottom: 1.5rem;
-    display: flex;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-.rich-project-card:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-.rpc-thumbnail {
-    flex-shrink: 0;
-    width: 100px;
-    background-color: var(--primary-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.rpc-thumbnail i {
-    font-size: 3rem;
-    color: rgba(255,255,255,0.5);
-}
-
-.rpc-main {
-    padding: 1.5rem;
-    flex-grow: 1;
-}
-
-.rpc-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem 0;
-}
-.rpc-title a {
-    text-decoration: none;
-    color: var(--primary-color);
-}
-.rpc-description {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 1.5rem;
-}
-
-.rpc-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #f0f0f0;
-    align-items: center;
-}
-.rpc-stats .stat {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-}
-.rpc-stats .stat i {
-    color: #888;
-}
-.rpc-stats .stat strong {
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--primary-color);
-}
-
-.rpc-actions {
-    flex-shrink: 0;
-    width: 200px;
-    padding: 1.5rem;
-    border-left: 1px solid #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.8rem;
-}
-.rpc-actions .btn {
-    width: 100%;
-    text-align: center;
-    padding: 0.8rem 0;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-}
-.follow-btn {
-    background: transparent;
-    border: 1px solid #ccc;
-    color: #555;
-}
-.follow-btn.following {
-    background-color: var(--accent-color);
-    color: white;
-    border-color: var(--accent-color);
-}
 
 /* Dinamik Etiketler */
 .rpc-tags {
@@ -3006,3 +2905,134 @@ body {
     color: var(--accent-color);
     font-weight: 600;
 }
+/* === KULLANICININ KENDİ SUNUMLARI SEKME İÇERİĞİ === */
+#tab-my-submissions h3 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-top: 0;
+}
+
+.my-submission-card {
+    position: relative; /* Silme butonu için konumlandırma referansı */
+}
+
+.my-submission-actions {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-my-sub-delete {
+    background-color: rgba(231, 76, 60, 0.9); /* Yarı saydam kırmızı */
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0; /* Başlangıçta tamamen gizli */
+    transform: translateY(10px); /* Aşağıda başlasın */
+}
+
+.my-submission-card:hover .btn-my-sub-delete {
+    opacity: 1; /* Fare üzerine gelince görünsün */
+    transform: translateY(0); /* Yukarı doğru kaysın */
+}
+
+.btn-my-sub-delete:hover {
+    background-color: #c0392b; /* Kırmızının koyu tonu */
+    transform: scale(1.05); /* Hafifçe büyüsün */
+}
+/* ========================================================== */
+/* === PROJELER SAYFASI - ULTRA EXTREM TASARIM v4 === */
+/* ========================================================== */
+
+/* --- Aktif ve Süresi Dolmuş Kart Ayrımı --- */
+.project-card-v3.status-expired {
+    opacity: 0.65;
+    filter: grayscale(80%); /* Süresi dolanları gri tonlamalı yap */
+    transition: all 0.3s ease;
+}
+.project-card-v3.status-expired:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: translateY(0); /* Hover efektini iptal et */
+    box-shadow: none;
+    border-color: var(--border-color);
+}
+
+/* --- ULTRA EXTREM: Haftanın Projesi Kartı Stilleri --- */
+.featured-project-section {
+    margin-bottom: 3rem;
+}
+.featured-project-card {
+    background: linear-gradient(135deg, #6d20c2, var(--accent-color)); /* Canlı mor/lila gradyan */
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(131, 56, 236, 0.3);
+}
+.featured-project-card::before { /* Animasyonlu parlama efekti */
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%);
+    transform: rotate(0deg);
+    animation: rotateGlow 15s linear infinite;
+}
+@keyframes rotateGlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.featured-tag {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--cta-color);
+    color: var(--primary-text);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.featured-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+.featured-info h2 {
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem 0;
+}
+.featured-info h2 a {
+    color: white;
+    text-decoration: none;
+}
+.featured-info p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    max-width: 70%;
+    margin-bottom: 1.5rem;
+}
+.featured-owner { display: flex; align-items: center; gap: 0.75rem; }
+.featured-owner img { width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; }
+.featured-stats {
+    display: flex;
+    gap: 2rem;
+    text-align: center;
+}
+.featured-stats .stat-item span { display: block; font-size: 1rem; opacity: 0.8; }
+.featured-stats .stat-item strong { font-size: 2.5rem; font-weight: 700; }
+.featured-stats .stat-item.prize strong { color: var(--cta-color); }

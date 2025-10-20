@@ -19,20 +19,28 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
 <div class="admin-container">
     <aside class="admin-sidebar">
         <h2>Yönetim Paneli</h2>
-<ul>
-    <li><a href="settings.php" class="<?= $current_page == 'settings.php' ? 'active' : '' ?>">Site Ayarları</a></li>
-    <li><a href="email_settings.php" class="<?= $current_page == 'email_settings.php' ? 'active' : '' ?>">E-posta Ayarları</a></li>
-    <li><a href="ip_blocker.php" class="<?= $current_page == 'ip_blocker.php' ? 'active' : '' ?>">IP Engelleme</a></li>
-    <li><a href="security_settings.php" class="<?= $current_page == 'security_settings.php' ? 'active' : '' ?>">Güvenlik Ayarları</a></li>
-    <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Anasayfa</a></li>
-    <li><a href="reports.php" class="<?= $current_page == 'reports.php' ? 'active' : '' ?>">Şikayet Yönetimi</a></li>
-    <li><a href="users.php" class="<?= $current_page == 'users.php' ? 'active' : '' ?>">Kullanıcı Yönetimi</a></li>
-    <li><a href="projects.php" class="<?= $current_page == 'projects.php' ? 'active' : '' ?>">Proje Yönetimi</a></li>
-    <li><a href="submissions.php" class="<?= $current_page == 'submissions.php' ? 'active' : '' ?>">Sunum Yönetimi</a></li>
-    <li><a href="comments.php" class="<?= $current_page == 'comments.php' ? 'active' : '' ?>">Yorum Yönetimi</a></li>
-    <li><a href="categories.php" class="<?= $current_page == 'categories.php' ? 'active' : '' ?>">Kategori Yönetimi</a></li>
-    <li><a href="files.php" class="<?= $current_page == 'files.php' ? 'active' : '' ?>">Dosya Yöneticisi</a></li>
-</ul>
+ <ul>
+    <li class="nav-heading">PANEL</li>
+    <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>"><i class="fas fa-home"></i> Anasayfa</a></li>
+    <li><a href="reports.php" class="<?= $current_page == 'reports.php' ? 'active' : '' ?>"><i class="fas fa-flag"></i> Şikayet Yönetimi</a></li>
+
+    <li class="nav-heading">İÇERİK YÖNETİMİ</li>
+    <li><a href="projects.php" class="<?= $current_page == 'projects.php' ? 'active' : '' ?>"><i class="fas fa-lightbulb"></i> Proje Yönetimi</a></li>
+    <li><a href="submissions.php" class="<?= $current_page == 'submissions.php' ? 'active' : '' ?>"><i class="fas fa-palette"></i> Sunum Yönetimi</a></li>
+    <li><a href="comments.php" class="<?= $current_page == 'comments.php' ? 'active' : '' ?>"><i class="fas fa-comments"></i> Yorum Yönetimi</a></li>
+    <li><a href="categories.php" class="<?= $current_page == 'categories.php' ? 'active' : '' ?>"><i class="fas fa-tags"></i> Kategori Yönetimi</a></li>
+    <li><a href="files.php" class="<?= $current_page == 'files.php' ? 'active' : '' ?>"><i class="fas fa-folder-open"></i> Dosya Yöneticisi</a></li>
+
+    <li class="nav-heading">KULLANICI YÖNETİMİ</li>
+    <li><a href="users.php" class="<?= $current_page == 'users.php' ? 'active' : '' ?>"><i class="fas fa-users"></i> Kullanıcı Yönetimi</a></li>
+    <li><a href="ip_blocker.php" class="<?= $current_page == 'ip_blocker.php' ? 'active' : '' ?>"><i class="fas fa-ban"></i> IP Engelleme</a></li>
+
+    <li class="nav-heading">SİTE AYARLARI</li>
+    <li><a href="settings.php" class="<?= $current_page == 'settings.php' ? 'active' : '' ?>"><i class="fas fa-cog"></i> Genel Ayarlar</a></li>
+    <li><a href="email_settings.php" class="<?= $current_page == 'email_settings.php' ? 'active' : '' ?>"><i class="fas fa-envelope"></i> E-posta Ayarları</a></li>
+    <li><a href="security_settings.php" class="<?= $current_page == 'security_settings.php' ? 'active' : '' ?>"><i class="fas fa-shield-alt"></i> Güvenlik Ayarları</a></li>
+ </ul>
+
             
     </aside>
     <main class="admin-main">

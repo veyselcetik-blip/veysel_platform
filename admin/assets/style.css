@@ -1,93 +1,96 @@
-/* admin/assets/style.css */
-:root{--primary-color:#2c3e50;--secondary-color:#34495e;--accent-color:#3498db;--danger-color:#e74c3c;--success-color:#2ecc71;--light-gray:#f4f6f9;--white-color:#fff;--border-radius:8px}body{font-family:'Poppins',sans-serif;background-color:var(--light-gray);color:var(--secondary-color);margin:0;padding:0}.admin-container{display:flex}.admin-sidebar{width:250px;background:var(--primary-color);color:var(--white-color);min-height:100vh}.admin-sidebar h2{text-align:center;padding:1.5rem 0;margin:0;background:rgba(0,0,0,.2)}.admin-sidebar ul{list-style:none;padding:0;margin:0}.admin-sidebar ul li a{display:block;padding:1rem 1.5rem;color:var(--white-color);text-decoration:none;border-bottom:1px solid var(--secondary-color);transition:background .3s ease}.admin-sidebar ul li a:hover,.admin-sidebar ul li a.active{background:var(--accent-color)}.admin-main{flex-grow:1;padding:2rem}.page-header{margin-bottom:2rem}.page-header h1{margin:0}.widget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem}.widget{background:var(--white-color);padding:1.5rem;border-radius:var(--border-radius);box-shadow:0 4px 15px rgba(0,0,0,.05)}.widget h3{margin:0 0 .5rem 0}.widget .count{font-size:2.5rem;font-weight:700}.widget a{text-decoration:none}.content-box{background:var(--white-color);padding:2rem;border-radius:var(--border-radius);box-shadow:0 4px 15px rgba(0,0,0,.05)}.table-responsive{overflow-x:auto}.styled-table{width:100%;border-collapse:collapse}.styled-table th,.styled-table td{padding:1rem;border-bottom:1px solid #f0f0f0}.styled-table th{text-align:left}.btn{padding:.6rem 1.2rem;border:none;border-radius:var(--border-radius);cursor:pointer;text-decoration:none;font-weight:600}.btn-danger{background:var(--danger-color);color:white}.btn-success{background:var(--success-color);color:white}
-/* === GELİŞMİŞ DASHBOARD STİLLERİ === */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* Grafik daha geniş olsun */
-    gap: 1.5rem;
+/* =================================================================== */
+/* === YENİLENMİŞ ADMİN PANELİ STİLİ v1.0 === */
+/* =================================================================== */
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    --light-gray: #f4f6f9;
+    --white-color: #fff;
+    --border-color: #e9ecef;
+    --border-radius: 8px;
 }
 
-.activity-feed h4 {
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-}
-.activity-feed ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 200px;
-    overflow-y: auto;
-}
-.activity-feed ul li {
-    padding: 0.5rem 0;
-    display: flex;
-    justify-content: space-between;
-}
-.activity-feed ul li small {
-    color: #999;
-}
-
-@media (max-width: 992px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr; /* Mobilde alt alta gelsin */
-    }
-}
-/* === ADMİN - KULLANICI YÖNETİMİ SAYFASI STİLLERİ === */
-
-/* Filtreleme Formu Stilleri */
-.filter-bar {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    align-items: flex-end;
-}
-
-.filter-bar .form-group {
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-gray);
+    color: var(--secondary-color);
     margin: 0;
 }
 
-.filter-bar label {
-    font-size: 0.85rem;
+.admin-container { display: flex; }
+
+/* Sol Menü (Sidebar) */
+.admin-sidebar {
+    width: 260px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    min-height: 100vh;
+    flex-shrink: 0;
+}
+.admin-sidebar h2 {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin: 0;
+    font-size: 1.4rem;
+    background: rgba(0,0,0,.2);
+}
+.admin-sidebar ul { list-style: none; padding: 0; margin: 0; }
+.admin-sidebar ul li a {
+    display: flex; /* İkon ve metni yan yana getirmek için */
+    align-items: center;
+    gap: 0.8rem; /* İkon ve metin arası boşluk */
+    padding: 1rem 1.5rem;
+    color: #bdc3c7; /* Daha yumuşak bir link rengi */
+    text-decoration: none;
+    border-left: 4px solid transparent; /* Aktif link için kenarlık */
+    transition: all .2s ease;
+}
+.admin-sidebar ul li a:hover {
+    background: var(--secondary-color);
+    color: var(--white-color);
+}
+.admin-sidebar ul li a.active {
+    background: var(--accent-color);
+    color: var(--white-color);
     font-weight: 600;
-    display: block;
-    margin-bottom: 0.5rem;
 }
 
-.filter-bar input,
-.filter-bar select {
-    width: 100%;
-    padding: 0.7rem;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    background-color: #f9f9f9;
-}
-
-.filter-bar .btn {
-    width: 100%;
-    background-color: var(--accent-color);
-    color: white;
-}
-
-/* Tablo İçindeki Durum Etiketleri */
-.status-badge-admin {
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
+/* Yeni Eklenen Başlık Stili */
+.admin-sidebar .nav-heading {
+    font-size: 0.75rem;
     font-weight: 700;
-    color: white;
+    color: #7f8c8d;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
     text-transform: uppercase;
-}
-.status-badge-admin.status-aktif {
-    background-color: var(--success-color); /* Yeşil */
-}
-.status-badge-admin.status-askıda {
-    background-color: #f39c12; /* Turuncu */
+    letter-spacing: 1px;
 }
 
-/* Tablo içindeki Select kutularının stili */
-.styled-table select {
-    padding: 0.4rem;
-    border: 1px solid #ddd;
+/* Ana İçerik Alanı */
+.admin-main { flex-grow: 1; padding: 2.5rem; }
+.page-header { margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+.page-header h1 { margin: 0; font-size: 2rem; }
+
+/* Genel Kart Yapısı (Widget, Content-box) */
+.widget, .content-box {
+    background: var(--white-color);
+    padding: 2rem;
     border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    margin-bottom: 1.5rem;
 }
+
+/* Tablolar */
+.table-responsive { overflow-x: auto; }
+.styled-table { width: 100%; border-collapse: collapse; }
+.styled-table th, .styled-table td { padding: 1rem; border-bottom: 1px solid var(--border-color); text-align: left; vertical-align: middle; }
+.styled-table thead th { background-color: var(--light-gray); font-weight: 600; }
+
+/* Butonlar */
+.btn { padding: .6rem 1.2rem; border: 1px solid transparent; border-radius: var(--border-radius); cursor: pointer; font-weight: 500; }
+.btn-danger { background-color: var(--danger-color); color: white; }
+.btn-success { background-color: var(--success-color); color: white; }

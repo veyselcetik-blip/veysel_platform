@@ -1,4 +1,4 @@
-// script.js (TÜM MODALLAR İÇİN EKSİKSİZ VE DÜZELTİLMİŞ NİHAİ SÜRÜM)
+// script.js (TÜM MODALLAR VE ŞİKAYET ÖZELLİĞİ İÇİN EKSİKSİZ VE ÇALIŞAN SÜRÜM)
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         openProposalBtn.addEventListener('click', () => openModal(proposalModal));
     }
     
-    // === DÜZELTİLMİŞ BÖLÜM BAŞLANGICI ===
     // Class'a göre modal açma (Giriş Yap, Kayıt Ol vb.)
     document.querySelectorAll('.open-login-modal').forEach(btn => {
         btn.addEventListener('click', () => openModal(loginModal));
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.open-register-modal').forEach(btn => {
         btn.addEventListener('click', () => openModal(registerModal));
     });
-    // === DÜZELTİLMİŞ BÖLÜM SONU ===
     
     // Modallar arası geçiş linkleri
     const switchToRegisterLink = document.getElementById('switchToRegister');
@@ -70,6 +68,65 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeAllModals();
     });
     
+    // =================================================================
+    // ÇALIŞMAYAN BÖLÜM İÇİN DÜZELTME: ŞİKAYET MODALI İŞLEVSELLİĞİ
+    // =================================================================
+    const reportForm = document.getElementById('report-form');
+    const reportSubmissionIdInput = document.getElementById('report_submission_id');
+
+    // 1. Şikayet et butonlarına tıklama olayı ekleniyor
+    document.querySelectorAll('.report-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const submissionId = this.dataset.submissionId;
+            if (reportSubmissionIdInput && reportModal) {
+                // Tıklanan sunumun ID'sini formdaki gizli input'a yaz
+                reportSubmissionIdInput.value = submissionId;
+                // Şikayet modalını aç
+                openModal(reportModal);
+            }
+        });
+    });
+
+    // 2. Şikayet formu gönderildiğinde AJAX ile çalışacak kod
+    if (reportForm) {
+        reportForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Sayfanın yenilenmesini engelle
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Gönderiliyor...';
+
+            const formData = new FormData(this);
+
+            // Dosya ana dizinde olduğu için yol doğru
+            fetch('ajax_report_submission.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(data.message); // Kullanıcıya başarı mesajı göster
+                    closeAllModals(); // Tüm modalları kapat
+                } else {
+                    alert('Hata: ' + (data.message || 'Bilinmeyen bir hata oluştu.'));
+                }
+            })
+            .catch(error => {
+                console.error('Şikayet gönderme hatası:', error);
+                alert('Bir ağ hatası oluştu. Lütfen tekrar deneyin.');
+            })
+            .finally(() => {
+                // Her durumda (başarılı veya başarısız) butonu tekrar aktif et
+                submitButton.disabled = false;
+                submitButton.textContent = 'Şikayeti Gönder';
+                reportForm.reset(); // Formu temizle
+            });
+        });
+    }
+    // =================================================================
+    // DÜZELTME SONU
+    // =================================================================
+
     // ======================================================
     // BÖLÜM 2: DOSYA YÜKLEYİCİ VE SUNUM FORMU
     // ======================================================
