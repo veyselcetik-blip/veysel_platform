@@ -1,5 +1,5 @@
 <?php
-// project-detail_FINAL.php — Birleştirilmiş ve tüm hataları giderilmiş final sürüm
+// project-detail.php - Tüm özellikler eklenmiş ve hataları giderilmiş nihai sürüm
 
 require 'includes/init.php'; // $db, session, helper fonksiyonları
 
@@ -29,11 +29,9 @@ if (($project['status'] ?? '') === 'aktif' && !empty($project['deadline'])) {
             $project['status'] = 'değerlendirme';
         }
     } catch (Exception $e) {
-        // Tarih formatı hatalıysa logla ama devam et
         error_log('Invalid date format for deadline in project ID: ' . $project_id);
     }
 }
-
 
 // --- 3) Rol & Görünürlük Değişkenleri ---
 $current_user_id = $_SESSION['user_id'] ?? 0;
@@ -42,7 +40,17 @@ $is_winner  = (is_logged_in() && !empty($project['winner_id']) && $current_user_
 $can_view_submissions = (($project['is_public'] ?? 0) == 1) || $is_owner;
 $winning_submission_id = (int)($project['winning_submission_id'] ?? 0);
 
-// --- 4) Proje değerlendirme (review) durumu ---
+// --- 4) KULLANICININ KENDİ SUNUMLARINI ÇEKME ---
+$my_submissions = [];
+if (is_logged_in()) {
+    $my_submissions_stmt = $db->prepare(
+        "SELECT id, file_path, entry_number, description FROM submissions WHERE project_id = ? AND user_id = ? ORDER BY entry_number ASC"
+    );
+    $my_submissions_stmt->execute([$project_id, $current_user_id]);
+    $my_submissions = $my_submissions_stmt->fetchAll();
+}
+
+// --- 5) Proje değerlendirme (review) durumu ---
 $has_review = false;
 if (($project['status'] ?? '') === 'tamamlandı' && $is_owner) {
     $review_check_stmt = $db->prepare('SELECT id FROM reviews WHERE project_id = ? AND reviewer_id = ?');
@@ -50,10 +58,10 @@ if (($project['status'] ?? '') === 'tamamlandı' && $is_owner) {
     if ($review_check_stmt->fetch()) { $has_review = true; }
 }
 
-// --- 5) İstatistikler ---
+// --- 6) İstatistikler ---
 $total_submissions = (int)$db->query("SELECT COUNT(*) FROM submissions WHERE project_id = {$project_id}")->fetchColumn();
 
-// --- 6) Sunumlar (kazananı başa al, sonra en yeniye göre sırala) ---
+// --- 7) Sunumlar (kazananı başa al, sonra en yeniye göre sırala) ---
 $submissions = [];
 if ($can_view_submissions) {
     $sql = "SELECT s.*, u.username AS designer_name
@@ -70,7 +78,7 @@ if ($can_view_submissions) {
     $submissions = $sub_stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// --- 7) Yorumlar ---
+// --- 8) Yorumlar ---
 $comments_stmt = $db->prepare('SELECT c.*, u.username FROM comments c JOIN users u ON c.user_id = u.id WHERE c.project_id = ? ORDER BY c.created_at DESC');
 $comments_stmt->execute([$project_id]);
 $comments = $comments_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -113,7 +121,14 @@ include 'includes/navbar.php';
     <div class="project-status-panel"><div class="status-left"><?php if (($project['status'] ?? '') === 'aktif' && !empty($project['deadline'])): ?><?php try { $deadline_dt_for_js = new DateTime($project['deadline'] . ' 23:59:59'); } catch (Exception $e) { $deadline_dt_for_js = new DateTime(); } ?><div id="countdown-timer" data-deadline="<?= $deadline_dt_for_js->format('Y-m-d\TH:i:s') ?>"></div><?php elseif (($project['status'] ?? '') === 'değerlendirme'): ?><div class="status-message evaluation"><i class="fas fa-hourglass-half"></i> Proje yeni sunumlara kapalı. Kazanan bekleniyor.</div><?php else: ?><div class="status-message completed"><i class="fas fa-info-circle"></i> Proje durumu: <?= htmlspecialchars(ucfirst(str_replace('_', ' ', $project['status'] ?? ''))) ?></div><?php endif; ?></div><div class="status-right"><?php if (is_logged_in() && !$is_owner && ($project['status'] ?? '') === 'aktif'): ?><button id="openProposalModalBtn" class="btn btn-primary btn-submit-now"><i class="fas fa-paper-plane"></i> Sunum Gönder</button><?php elseif ($is_owner && empty($project['winner_id']) && $total_submissions >= 2): ?><a href="create_poll.php?project_id=<?= (int)$project_id ?>" class="btn btn-secondary btn-submit-now"><i class="fas fa-poll"></i> Anket Oluştur</a><?php endif; ?></div></div>
 
     <div class="tab-container">
-        <div class="tab-buttons"><button class="tab-btn active" data-tab="submissions">Sunumlar (<?= (int)$total_submissions ?>)</button><button class="tab-btn" data-tab="summary">Yarışma Özeti</button><button class="tab-btn" data-tab="comments">Yorumlar / S.S.S. (<?= count($comments) ?>)</button></div>
+        <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="submissions">Sunumlar (<?= (int)$total_submissions ?>)</button>
+            <button class="tab-btn" data-tab="summary">Yarışma Özeti</button>
+            <button class="tab-btn" data-tab="comments">Yorumlar / S.S.S. (<?= count($comments) ?>)</button>
+            <?php if (!empty($my_submissions)): ?>
+                <button class="tab-btn" data-tab="my-submissions">Sunumlarım (<?= count($my_submissions) ?>)</button>
+            <?php endif; ?>
+        </div>
 
         <div class="tab-content active" id="tab-submissions">
             <?php if ($can_view_submissions): ?>
@@ -192,6 +207,31 @@ include 'includes/navbar.php';
                 <?php endif; ?>
             </div>
         </div>
+        
+        <?php if (!empty($my_submissions)): ?>
+        <div class="tab-content" id="tab-my-submissions">
+            <h3>Bu Projeye Gönderdiğiniz Sunumlar</h3>
+            <p>Bu alanda sadece sizin gönderdiğiniz sunumlar listelenir. Sunumunuzu silmek için üzerine gelin.</p>
+            <div class="submission-grid compact-grid" style="margin-top: 1.5rem;">
+                <?php foreach ($my_submissions as $my_sub): ?>
+                <div class="submission-card-v2 my-submission-card">
+                    <div class="submission-entry-number">#<?= htmlspecialchars($my_sub['entry_number']) ?></div>
+                    <a href="<?= htmlspecialchars($my_sub['file_path']) ?>" target="_blank" class="submission-image-link">
+                        <img src="<?= htmlspecialchars($my_sub['file_path']) ?>" alt="Sunumum #<?= htmlspecialchars($my_sub['entry_number']) ?>">
+                    </a>
+                    <div class="my-submission-actions">
+                        <form action="actions/delete_my_submission.php" method="POST" onsubmit="return confirm('Bu sunumu kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.');">
+                            <input type="hidden" name="submission_id" value="<?= $my_sub['id'] ?>">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
+                            <button type="submit" class="btn-my-sub-delete"><i class="fas fa-trash-alt"></i> Sil</button>
+                        </form>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+
     </div>
 </main>
 
