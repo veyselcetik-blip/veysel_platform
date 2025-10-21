@@ -2948,23 +2948,8 @@ body {
     transform: scale(1.05); /* Hafifçe büyüsün */
 }
 /* ========================================================== */
-/* === PROJELER SAYFASI - ULTRA EXTREM TASARIM v4 === */
+/* === PROJELER SAYFASI - ULTRA EXTREM TASARIM v5 === */
 /* ========================================================== */
-
-/* --- Aktif ve Süresi Dolmuş Kart Ayrımı --- */
-.project-card-v3.status-expired {
-    opacity: 0.65;
-    filter: grayscale(80%); /* Süresi dolanları gri tonlamalı yap */
-    transition: all 0.3s ease;
-}
-.project-card-v3.status-expired:hover {
-    opacity: 1;
-    filter: grayscale(0%);
-    transform: translateY(0); /* Hover efektini iptal et */
-    box-shadow: none;
-    border-color: var(--border-color);
-}
-
 /* --- ULTRA EXTREM: Haftanın Projesi Kartı Stilleri --- */
 .featured-project-section {
     margin-bottom: 3rem;
@@ -3036,3 +3021,171 @@ body {
 .featured-stats .stat-item span { display: block; font-size: 1rem; opacity: 0.8; }
 .featured-stats .stat-item strong { font-size: 2.5rem; font-weight: 700; }
 .featured-stats .stat-item.prize strong { color: var(--cta-color); }
+
+@media (max-width: 768px) {
+    .featured-body {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .featured-stats {
+        margin-top: 2rem;
+    }
+    .featured-info p {
+        max-width: 100%;
+    }
+}
+/* --- Sayfa Genel Yapısı ve Arka Planı --- */
+.page-background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    z-index: -1;
+}
+.filter-bar {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    margin-bottom: 3rem;
+}
+.project-list-container-v4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+}
+
+/* --- Aktif Proje Kartı (Glassmorphism) --- */
+.project-card-v4-active {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--primary-text);
+    background: rgba(255, 255, 255, 0.5); /* Camsı etki için yarı saydam arka plan */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(131, 56, 236, 0.1);
+    transition: all 0.3s ease;
+}
+.project-card-v4-active:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px 0 rgba(131, 56, 236, 0.2);
+}
+.active-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.3); }
+.owner-info { display: flex; align-items: center; gap: 0.75rem; font-weight: 600; font-size: 0.9rem; }
+.owner-info img { width: 32px; height: 32px; border-radius: 50%; }
+.countdown { font-size: 0.8rem; font-weight: 700; }
+.countdown.urgent { color: #e74c3c; }
+.active-body { padding: 1.5rem; flex-grow: 1; }
+.category-tag { background: rgba(131, 56, 236, 0.1); color: var(--accent-color); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+.active-body h3 { font-size: 1.5rem; margin: 1rem 0 0 0; }
+.active-footer { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255, 255, 255, 0.5); border-top: 1px solid rgba(255,255,255,0.3); }
+.prize-info { font-size: 1.4rem; font-weight: 700; color: var(--accent-color); display: flex; align-items: center; gap: 0.5rem; }
+.stats-info { display: flex; gap: 1rem; color: var(--secondary-text); }
+
+/* --- Tamamlanmış Proje Kartı (Kazanan Vitrini) --- */
+.project-card-v4-completed {
+    display: flex;
+    position: relative;
+    aspect-ratio: 16 / 9; /* Kartı en-boy oranına zorla */
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+.project-card-v4-completed:hover {
+    transform: scale(1.03);
+}
+.completed-overlay {
+    position: absolute;
+    inset: 0; /* top, bottom, left, right: 0 */
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.completed-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0,0,0,0.5);
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.completed-content h3 {
+    font-size: 1.4rem;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 2px 5px black;
+}
+.winner-info {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+/* ========================================================== */
+/* === PROFİL SAYFASI - ULTRA EXTREM "YAŞAYAN PORTFOLYO" v5 === */
+/* ========================================================== */
+
+.profile-v5-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+}
+.profile-v5-sidebar {
+    position: sticky; /* Sabit Sütun */
+    top: 100px; /* Navbar yüksekliğine göre ayarlayın */
+}
+.sidebar-content {
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+}
+.profile-v5-avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid var(--background-color);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-top: -95px; /* Sayfanın yukarısına taşır */
+    margin-bottom: 1rem;
+}
+.profile-v5-container h1 { font-size: 2rem; margin-bottom: 0.25rem; }
+.profile-v5-title { color: var(--secondary-text); margin-bottom: 1.5rem; }
+.profile-v5-actions { margin-bottom: 2rem; }
+.profile-v5-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; text-align: center; padding: 1.5rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; }
+.profile-v5-stats .stat-item strong { font-size: 1.5rem; display: block; }
+.profile-v5-stats .stat-item span { font-size: 0.8rem; color: var(--secondary-text); }
+.profile-v5-skills h3 { font-size: 1.2rem; text-align: center; margin-bottom: 1rem; }
+
+.profile-v5-main h2 { font-size: 1.8rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; }
+.profile-v5-main h2 i { color: var(--accent-color); margin-right: 0.75rem; }
+.signature-work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.signature-item { display: block; border-radius: var(--border-radius); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+.signature-item:hover { transform: scale(1.03); }
+.signature-item img { width: 100%; height: 100%; object-fit: cover; }
+
+.timeline-v5-item { display: flex; gap: 1.5rem; position: relative; padding-left: 45px; margin-bottom: 2rem; }
+.timeline-v5-icon { position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
+.timeline-v5-icon.project_win { background: #ffbe0b; } /* Sarı */
+.timeline-v5-icon.five_star { background: #27ae60; } /* Yeşil */
+.timeline-v5-content strong { display: block; font-size: 1.1rem; }
+.timeline-v5-content p { margin: 0.25rem 0; color: var(--secondary-text); }
+.timeline-v5-content small { font-size: 0.8rem; color: #aaa; }
+
+.portfolio-grid-v5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+.portfolio-item-v5 { display: block; border-radius: var(--border-radius); overflow: hidden; opacity: 0.8; transition: all 0.3s ease; }
+.portfolio-item-v5:hover { opacity: 1; transform: scale(1.05); }
+.portfolio-item-v5 img { width: 100%; height: 100%; object-fit: cover; }

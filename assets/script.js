@@ -344,3 +344,56 @@ window.addEventListener('click', (event) => {
         }
     }
 });
+// === PROFİL SAYFASI - YETENEK RADARI GRAFİĞİ ===
+document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('skillsRadarChart');
+    if (ctx) {
+        // Bu verileri daha sonra veritabanından dinamik olarak çekebilirsiniz.
+        // Şimdilik örnek verilerle dolduruyoruz.
+        const skillsData = {
+            labels: [
+                'Logo Tasarımı',
+                'Marka Kimliği',
+                'Web Arayüzü (UI)',
+                'İllüstrasyon',
+                'Tipografi'
+            ],
+            datasets: [{
+                label: 'Yetenek Seviyesi',
+                data: [90, 85, 75, 80, 95], // 0-100 arası örnek değerler
+                fill: true,
+                backgroundColor: 'rgba(131, 56, 236, 0.2)',
+                borderColor: 'rgb(131, 56, 236)',
+                pointBackgroundColor: 'rgb(131, 56, 236)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(131, 56, 236)'
+            }]
+        };
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: skillsData,
+            options: {
+                elements: {
+                    line: {
+                        borderWidth: 3
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { display: false },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Etiketi gizle
+                    }
+                }
+            }
+        });
+    }
+});
